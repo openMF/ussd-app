@@ -1,0 +1,45 @@
+
+
+spring:
+  #redis
+  redis:
+    host: localhost
+#    password: admin
+    port: 6379
+    timeout: 10000
+    jedis:
+      pool:
+        max-idle: 200
+        min-idle: 300000
+        max-active: 400
+        max-wait: 10000
+
+mifos-ussd:
+  maximumUSSDSessionIdleAge: 10000
+  clearIdleSessionsFixedDelay: 5000
+  initialMenuState: MAIN_MENU_STATE
+  menu:
+    MAIN_MENU_STATE:
+      stateType: CHOICE
+      textTemplate: Welcome to mifos.\n1. Withdraw\n2. Transfer\n3. Loan\n4. Savings
+      stateChoices:
+        1: WITHDRAW_MENU_STATE
+        2: TRANSFER_MENU_STATE
+        3: LOAN_MENU_STATE
+        4: SAVINGS_MENU_STATE
+    WITHDRAW_MENU_STATE:
+      stateType: INPUT
+      textTemplate: Select account. {{accounts}}
+      nextState: ENTER_WITHDRAW_AMOUNT_STATE
+    ENTER_WITHDRAW_AMOUNT_STATE:
+      stateType: INPUT
+      textTemplate: Please enter amount to withdraw
+      nextState: CONFIRM_WITHDRAW_AMOUNT_STATE
+    CONFIRM_WITHDRAW_AMOUNT_STATE:
+      stateType: CHOICE
+      textTemplate: Confirm to withdraw {{amount}}.\n1. Confirm\n2. Cancel
+      stateChoices:
+        1: WITHDRAW_STATE
+        2: CANCEL_WITHDRAW_STATE
+    WITHDRAW_STATE:
+      stateType: INFO_PROVIDED

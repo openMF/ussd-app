@@ -1,0 +1,24 @@
+{
+  "properties": [
+    {
+      "name": "mifos-ussd.clearIdleSessionsFixedDelay",
+      "type": "java.lang.Integer",
+      "description": "Description for mifos-ussd.clearIdleSessionsFixedDelay."
+    },
+    {
+      "name": "mifos-ussd.maximumUSSDSessionIdleAge",
+      "type": "java.lang.Integer",
+      "description": "Description for mifos-ussd.maximumUSSDSessionIdleAge."
+    },
+    {
+      "name": "mifos-ussd.providerName",
+      "type": "java.lang.String",
+      "description": "Description for mifos-ussd.providerName."
+    },
+    {
+      "name": "mifos-ussd.menu.initialState",
+      "type": "java.lang.String",
+      "description": "Description for mifos-ussd.menu.initialState."
+    }
+  ]
+}
