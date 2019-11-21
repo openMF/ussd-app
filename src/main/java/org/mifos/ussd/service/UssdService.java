@@ -32,10 +32,10 @@ public class UssdService {
         this.appConfig = appConfig;
     }
 
-    public Response process(String sessionId, String msisdn, String input, boolean isNew){
-        Response response=new Response();
-
-        if(isNew){
+    public Response process(String sessionId, String msisdn, String input, boolean isNew) {
+        Response response = new Response();
+        //Todo: Write code to handle transitions
+        if (isNew) {
             String text = createUssdSession(sessionId, msisdn);
             response.setMessage(StringEscapeUtils.unescapeJava(text));
             response.setContinue(true);

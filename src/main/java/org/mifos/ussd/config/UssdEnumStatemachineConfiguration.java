@@ -19,16 +19,19 @@ public class UssdEnumStatemachineConfiguration extends StateMachineConfigurerAda
     @Override
     public void configure(StateMachineTransitionConfigurer<UssdState, UssdEvent> transitions) throws Exception {
         super.configure(transitions);
+        //TODO: configure transitions
     }
 
     @Override
     public void configure(StateMachineStateConfigurer<UssdState, UssdEvent> states) throws Exception {
         super.configure(states);
+        //Todo: Configure states
     }
 
     @Override
     public void configure(StateMachineConfigurationConfigurer<UssdState, UssdEvent> config) throws Exception {
         config.withConfiguration()
                 .autoStartup(false);
+        //Todo: Configure
     }
 }
