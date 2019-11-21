@@ -3,6 +3,7 @@ package org.mifos.ussd.controller;
 import org.mifos.ussd.domain.Response;
 import org.mifos.ussd.provider.UssdProvider;
 import org.mifos.ussd.provider.UssdProviderFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,10 @@ public class UssdController {
                                               @RequestParam("type") Integer type) {
         UssdProvider ussdProvider = ussdProviderFactory.getUssdProvider("generic");
         Response response = ussdProvider.handleUSSDRequest(sessionId, msisdn, input, (type == 1));
-        return new ResponseEntity<>(response.getMessage(), HttpStatus.OK);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("x-continue", response.isContinue() ? "CONT" : "END");
+
+        return ResponseEntity.ok().headers(responseHeaders).body(response.getMessage());
     }
 }
