@@ -1,5 +1,6 @@
 package org.mifos.ussd.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.annotation.Id;
@@ -17,7 +18,9 @@ import java.util.Map;
 public class Session implements Serializable {
     @Id
     private String sessionId;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date dateCreated;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date lastModified;
     private Map<String, Object> data;
     private String msisdn;
