@@ -41,11 +41,11 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    @Scheduled(fixedDelayString = "${mifos-ussd.clearIdleSessionsFixedDelay:5000}")
+    @Scheduled(fixedDelayString = "${mifos-ussd.clearIdleSessionsFixedDelay:1000}")
     public void clearOldSessions() {
         sessionRepository.findAll().forEach(session -> {
-            int age = DateUtil.getAge(session.getLastModified());
-            if ((age > appConfig.getMaximumUSSDSessionIdleAge()) ||
+            int age = DateUtil.getAgeSeconds(session.getLastModified());
+            if ((age > appConfig.getMaximumUSSDSessionIdleAgeSeconds()) ||
                     (session.getContextData(AppConstants.CURRENT_STATE_SESSION_KEY).equals(UssdState.END_STATE))) {
                 delete(session);
                 logger.info("{\"event\":\"{}\", \"age\":{}, \"session\":{}}", AppConstants.LOG_EVICT_SESSION_EVENT,

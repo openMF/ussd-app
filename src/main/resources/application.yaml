@@ -15,8 +15,8 @@ spring:
         max-wait: 10000
 
 mifos-ussd:
-  maximumUSSDSessionIdleAge: 10000
-  clearIdleSessionsFixedDelay: 5000
+  maximumUSSDSessionIdleAgeSeconds: 10
+  clearIdleSessionsFixedDelay: 100
   initialMenuState: MAIN_MENU_STATE
   menu:
     MAIN_MENU_STATE:

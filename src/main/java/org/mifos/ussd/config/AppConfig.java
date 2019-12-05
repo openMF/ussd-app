@@ -10,16 +10,16 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "mifos-ussd")
 @Component
 public class AppConfig {
-    private int maximumUSSDSessionIdleAge;
+    private int maximumUSSDSessionIdleAgeSeconds;
     private UssdState initialMenuState;
     private Map<UssdState, Menu> menu;
 
-    public int getMaximumUSSDSessionIdleAge() {
-        return maximumUSSDSessionIdleAge;
+    public int getMaximumUSSDSessionIdleAgeSeconds() {
+        return maximumUSSDSessionIdleAgeSeconds;
     }
 
-    public void setMaximumUSSDSessionIdleAge(int maximumUSSDSessionIdleAge) {
-        this.maximumUSSDSessionIdleAge = maximumUSSDSessionIdleAge;
+    public void setMaximumUSSDSessionIdleAgeSeconds(int maximumUSSDSessionIdleAgeSeconds) {
+        this.maximumUSSDSessionIdleAgeSeconds = maximumUSSDSessionIdleAgeSeconds;
     }
 
     public UssdState getInitialMenuState() {
