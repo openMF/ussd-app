@@ -1,5 +1,7 @@
 package org.mifos.ussd.domain;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mifos.ussd.service.UssdState;
 
 import java.util.HashMap;
@@ -41,5 +43,18 @@ public class Menu {
 
     public void setNextState(UssdState nextState) {
         this.nextState = nextState;
+    }
+
+    @Override
+    public String toString() {
+        String str = "";
+
+        try {
+            str = new ObjectMapper().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return str;
     }
 }

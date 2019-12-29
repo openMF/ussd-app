@@ -4,7 +4,7 @@ import org.mifos.ussd.config.AppConfig;
 import org.mifos.ussd.config.AppConstants;
 import org.mifos.ussd.domain.Session;
 import org.mifos.ussd.repository.session.SessionRepository;
-import org.mifos.ussd.utils.DateUtil;
+import org.mifos.ussd.common.utils.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;

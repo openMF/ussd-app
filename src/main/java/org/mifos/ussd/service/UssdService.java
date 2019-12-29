@@ -1,11 +1,14 @@
 package org.mifos.ussd.service;
 
 import org.apache.commons.text.StringEscapeUtils;
+import org.mifos.ussd.common.exception.SessionNotFoundException;
 import org.mifos.ussd.config.AppConfig;
 import org.mifos.ussd.config.AppConstants;
 import org.mifos.ussd.domain.Menu;
 import org.mifos.ussd.domain.Response;
 import org.mifos.ussd.domain.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.messaging.Message;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.access.StateMachineAccess;
@@ -21,6 +24,8 @@ import java.util.Optional;
 
 @Service
 public class UssdService {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final StateMachineFactory<UssdState, UssdEvent> stateMachineFactory;
     private final SessionService sessionService;
@@ -39,12 +44,15 @@ public class UssdService {
             String text = createUssdSession(sessionId, msisdn);
             response.setMessage(StringEscapeUtils.unescapeJava(text));
             response.setContinue(true);
+        } else {
+            build(sessionId);
         }
 
         return response;
     }
 
     private String createUssdSession(String sessionId, String msisdn) {
+        logger.info("{\"event\":\"CREATE_SESSION\", \"sessionId\":\"{}\", \"msisdn\":\"{}\"}", sessionId, msisdn);
         Session session = new Session();
         session.setSessionId(sessionId);
         session.setMsisdn(msisdn);
@@ -55,12 +63,14 @@ public class UssdService {
         sessionService.createOrUpdateSession(session);
 
         Menu menu = appConfig.getMenu().get(initialMenuState);
+        String menuText = menu.getTextTemplate();
 
-        return menu.getTextTemplate();
+        logger.info("{\"event\":\"DISPLAY_MENU\", \"menuState\":\"{}\", \"menu\":\"{}\"}", initialMenuState, menuText);
+        return menuText;
     }
 
     private StateMachine<UssdState, UssdEvent> build(String sessionId) {
-        Session session = sessionService.findSessionBySessionId(sessionId).get();
+        Session session = sessionService.findSessionBySessionId(sessionId).orElseThrow(()-> new SessionNotFoundException("Could not find session with id: "+sessionId));
 
         StateMachine<UssdState, UssdEvent> stateMachine = this.stateMachineFactory.getStateMachine(sessionId);
         stateMachine.stop();

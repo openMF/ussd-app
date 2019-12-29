@@ -1,4 +1,4 @@
-package org.mifos.ussd.utils;
+package org.mifos.ussd.common.utils;
 
 
 import org.joda.time.LocalDateTime;
