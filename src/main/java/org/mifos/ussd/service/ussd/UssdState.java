@@ -1,6 +1,7 @@
-package org.mifos.ussd.service;
+package org.mifos.ussd.service.ussd;
 
 public enum UssdState {
+    INITIAL_STATE,
     MAIN_MENU_STATE,
     ENTER_PIN_STATE,
     TRANSFER_MENU_STATE,

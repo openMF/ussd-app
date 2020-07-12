@@ -1,0 +1,17 @@
+package org.mifos.ussd.service.ussd;
+
+public enum UssdEvent {
+    INITIALIZE,
+    TRANSFER,
+    WITHDRAW_MENU_EVENT,
+    MAIN_MENU_EVENT,
+    TRANSFER_MENU_EVENT,
+    LOAN_MENU_EVENT,
+    SAVINGS_MENU_EVENT,
+    WITHDRAW_STATE,
+    CANCEL_WITHDRAW_STATE,
+    WITHDRAW,
+    REQUEST_LOAN,
+    UNKNOWN_EVENT,
+    TERMINATE_EVENT
+}

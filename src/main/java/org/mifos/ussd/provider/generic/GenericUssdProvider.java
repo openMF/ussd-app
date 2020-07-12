@@ -2,7 +2,7 @@ package org.mifos.ussd.provider.generic;
 
 import org.mifos.ussd.domain.Response;
 import org.mifos.ussd.provider.UssdProvider;
-import org.mifos.ussd.service.UssdService;
+import org.mifos.ussd.service.ussd.UssdService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

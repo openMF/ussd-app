@@ -4,7 +4,6 @@ import org.mifos.ussd.domain.Response;
 import org.mifos.ussd.provider.UssdProvider;
 import org.mifos.ussd.provider.UssdProviderFactory;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,9 +22,9 @@ public class UssdController {
     }
 
     @RequestMapping(
-            value = "generic",
-            method = RequestMethod.POST,
-            produces = MediaType.TEXT_PLAIN_VALUE)
+        value = "generic",
+        method = RequestMethod.POST,
+        produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> ussdHandler(@RequestParam("sessionId") String sessionId,
                                               @RequestParam("msisdn") String msisdn,
                                               @RequestParam("input") String input,
@@ -34,7 +33,7 @@ public class UssdController {
         Response response = ussdProvider.handleUSSDRequest(sessionId, msisdn, input, (type == 1));
 
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add("x-continue", response.isContinue() ? "CONT" : "END");
+        responseHeaders.add("x-continue", response.isTerminate() ? "END" : "CONT");
 
         return ResponseEntity.ok().headers(responseHeaders).body(response.getMessage());
     }

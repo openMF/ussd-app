@@ -5,7 +5,7 @@ spring:
   redis:
     host: localhost
 #    password: admin
-    port: 6379
+    port: 7001
     timeout: 10000
     jedis:
       pool:
@@ -15,31 +15,33 @@ spring:
         max-wait: 10000
 
 mifos-ussd:
-  maximumUSSDSessionIdleAgeSeconds: 10
+  maximumUSSDSessionIdleAgeSeconds: 60
   clearIdleSessionsFixedDelay: 100
-  initialMenuState: MAIN_MENU_STATE
   menu:
+    INITIAL_STATE:
+      stateType: INPUT
+      eventTrigger: MAIN_MENU_EVENT
     MAIN_MENU_STATE:
       stateType: CHOICE
       textTemplate: Welcome to mifos.\n1. Withdraw\n2. Transfer\n3. Loan\n4. Savings
-      stateChoices:
-        1: WITHDRAW_MENU_STATE
-        2: TRANSFER_MENU_STATE
-        3: LOAN_MENU_STATE
-        4: SAVINGS_MENU_STATE
+      eventTriggerChoices:
+        1: WITHDRAW_MENU_EVENT
+        2: TRANSFER_MENU_EVENT
+        3: LOAN_MENU_EVENT
+        4: SAVINGS_MENU_EVENT
     WITHDRAW_MENU_STATE:
       stateType: INPUT
-      textTemplate: Select account. {{accounts}}
-      nextState: ENTER_WITHDRAW_AMOUNT_STATE
+      textTemplate: Select account.<#list accounts as acc>\n${acc?counter}. Acc:${acc} </#list>
+      eventTrigger: WITHDRAW
     ENTER_WITHDRAW_AMOUNT_STATE:
       stateType: INPUT
       textTemplate: Please enter amount to withdraw
-      nextState: CONFIRM_WITHDRAW_AMOUNT_STATE
     CONFIRM_WITHDRAW_AMOUNT_STATE:
       stateType: CHOICE
       textTemplate: Confirm to withdraw {{amount}}.\n1. Confirm\n2. Cancel
-      stateChoices:
+      eventTriggerChoices:
         1: WITHDRAW_STATE
         2: CANCEL_WITHDRAW_STATE
     WITHDRAW_STATE:
-      stateType: INFO_PROVIDED
+      stateType: TERMINATE
+      textTemplate: with
